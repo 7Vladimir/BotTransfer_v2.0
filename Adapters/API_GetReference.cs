@@ -43,12 +43,12 @@ namespace BotTransfer.Adapters
             var body = @"{" + "\n" +
             @"  ""amount"": {" + "\n" +
             @"    ""currency"": ""RUB""," + "\n" +
-            @$"    ""value"": ""{value}""" + "\n" +
+            @$"    ""value"": ""{value}.00""" + "\n" +
             @"  }," + "\n" +
             @$"  ""description"": ""Заказ {time}""," + "\n" +
             @"  ""returnUrl"": ""https://merchant.website/return_url""," + "\n" +
             @"  ""metadata"": {" + "\n" +
-            @"    ""orderId"": 2123" + "\n" +
+            @"    ""orderId"": 2022" + "\n" +
             @"  }" + "\n" +
             @"}";
 
