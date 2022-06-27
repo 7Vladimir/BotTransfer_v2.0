@@ -15,13 +15,14 @@ using Telegram.Bot.Types;
 using System.Net.Http;
 using BotTransfer.Models;
 using Newtonsoft.Json;
-
+using NLog;
 namespace BotTransfer.Adapters
 {
     internal class API_GetReference
     {
         public static string pull(int value)
         {
+            Logger _logger = LogManager.GetCurrentClassLogger();
             string url = "http://404";
             DateTime dateTime = DateTime.Now;
             string time = dateTime.ToString()
@@ -29,7 +30,7 @@ namespace BotTransfer.Adapters
                 .Replace(":", "")
                 .Replace(" ", "");
             WebResponse response;
-            string ContentResponse = "";           
+            string ContentResponse = "";
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://kassa.amra-bank.com/api/v1/payments");
 
@@ -63,7 +64,7 @@ namespace BotTransfer.Adapters
             postStream.Close();
             try
             {
-                using (response = request.GetResponse())//
+                using (response = request.GetResponse())
                 {
                     Stream receiveStream = response.GetResponseStream();
                     StreamReader reader = new StreamReader(receiveStream, Encoding.UTF8);
@@ -73,12 +74,13 @@ namespace BotTransfer.Adapters
                Root root = JsonConvert.DeserializeObject<Root>(ContentResponse);
                url = root.confirmation.confirmationUrl;
                Console.WriteLine($"Получили ссылку на оплату = {root.confirmation.confirmationUrl}");
+                _logger.Info($"Получили ссылку на оплату = {root.confirmation.confirmationUrl}");
             }
             catch (Exception ex)
             {
                 int r = 0;//
                 Console.WriteLine("ERORORORO:" + ex.ToString());
-                Console.WriteLine("Текст ссылки --------------> "+url);
+                Console.WriteLine("Текст ссылки --------------> " + url);
             }
             return url;
         }

@@ -14,6 +14,7 @@ using BotTransfer.WorkMessage;
 using BotTransfer.Connection;
 using System.Net;
 using System.Diagnostics;
+using NLog;
 
 namespace TestBot
 {
@@ -22,11 +23,10 @@ namespace TestBot
         static void Main(string[] args)
         {
             try
-            {                
+            {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 MyBot bot = new MyBot();
                 Console.WriteLine(ServicePointManager.SecurityProtocol.ToString());
-
                 bot.Start();
             }
             catch (Exception ex)

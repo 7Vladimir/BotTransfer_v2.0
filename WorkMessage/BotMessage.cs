@@ -10,7 +10,7 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 using System.Configuration;
 using System.Data.SqlClient;
-
+using NLog;
 namespace BotTransfer.WorkMessage
 {
     public static class BotMessage

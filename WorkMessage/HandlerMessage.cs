@@ -11,12 +11,14 @@ using Telegram.Bot.Types.ReplyMarkups;
 using System.Configuration;
 using System.Data.SqlClient;
 using BotTransfer.Adapters;
+using NLog;
 namespace BotTransfer.WorkMessage
 {
     internal class HandlerMessage
     {
         public static async Task handlerMessage(ITelegramBotClient botClient, Message message)
         {
+            Logger _logger = LogManager.GetCurrentClassLogger();
             bool flag = true;
             int value = 0;
             if (message.Text.ToLower() == "да")
@@ -44,21 +46,21 @@ namespace BotTransfer.WorkMessage
             }
             if (flag == true)
             {
-                string url = API_GetReference.pull(value);
-                Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Получили значение ссылки");
+                //Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Получили значение ссылки");
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TestBotTg"].ConnectionString);
                 con.Open();
                 Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Открыли коннекшн");
+                _logger.Info("Открыли коннекшн");
                 string queryUpdate = $"UPDATE TestBotTg SET Money={value} WHERE ChatId={Convert.ToInt32(message.Chat.Id)}";
                 SqlCommand cmd = new SqlCommand(queryUpdate, con);
                 cmd.ExecuteNonQuery();
                 con.Close();
-
+                string url = API_GetReference.pull(value);
                 Console.WriteLine("Ввели число");
                 if (value > 0)
                 {
                     Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Значение больше 0");
-                    var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(url);
+                    var plainTextBytes = Encoding.UTF8.GetBytes(url);
                     InlineKeyboardMarkup inKeyboard = new InlineKeyboardMarkup(new[]
                     {
                         InlineKeyboardButton.WithUrl("Получить ссылку",url)

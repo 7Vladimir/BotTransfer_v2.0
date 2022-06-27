@@ -8,6 +8,9 @@ using Telegram.Bot;
 using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using BotTransfer.Exceptions;
+using Microsoft.Extensions.Logging;
+using NLog;
+
 namespace BotTransfer.Interface
 {
     internal class MyBot
@@ -21,7 +24,9 @@ namespace BotTransfer.Interface
 
         public void Start()
         {
+            Logger _logger = LogManager.GetCurrentClassLogger();
             Console.WriteLine("Бот запущен " + bot.GetMeAsync().Result.FirstName);
+            _logger.Info("Бот запущен");
             var evt = new AutoResetEvent(false);
             var cts = new CancellationTokenSource();
             var cancellationtoken = cts.Token;

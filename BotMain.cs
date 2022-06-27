@@ -12,12 +12,14 @@ using BotTransfer.WorkMessage;
 using BotTransfer.Connection;
 using BotTransfer.WorkKeyboard;
 using BotTransfer.Adapters;
+using NLog;
 namespace BotTransfer
 {
     internal class BotMain
     {
-        public static async Task MainMessage(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+        public static async Task MainMessage(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)            
         {
+            Logger _logger = LogManager.GetCurrentClassLogger();
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(update));
 
             if (update.Type == Telegram.Bot.Types.Enums.UpdateType.Message)

@@ -9,6 +9,7 @@ using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
 using System.Configuration;
 using System.Data.SqlClient;
+using NLog;
 namespace BotTransfer.Connection
 {
     internal class SingletonDB
@@ -25,7 +26,6 @@ namespace BotTransfer.Connection
         }
         public bool getQuery(ITelegramBotClient botClient, Message message)
         {
-
             bool answer = false;
             if (message.Text.ToLower() == "/start")
             {
@@ -36,6 +36,7 @@ namespace BotTransfer.Connection
         }
         public static bool respBit(int chatId)
         {
+            Logger logger = LogManager.GetCurrentClassLogger();
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TestBotTg"].ConnectionString);
             con.Open();
             bool answer = false;
