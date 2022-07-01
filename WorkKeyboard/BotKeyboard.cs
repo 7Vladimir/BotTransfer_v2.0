@@ -11,7 +11,8 @@ using System.Configuration;
 using System.Data.SqlClient;
 using BotTransfer.Connection;
 using Telegram.Bot.Types.ReplyMarkups;
-
+using Sentry;
+using SharpRaven;
 namespace BotTransfer.WorkKeyboard
 {
     internal class BotKeyboard
@@ -43,11 +44,11 @@ namespace BotTransfer.WorkKeyboard
             {
                 ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup(new[]
                 {
-                        new KeyboardButton[]{"Новый перевод"}
+                new KeyboardButton[]{"Новый перевод"}
                 });
                 await botClient.SendTextMessageAsync(message.Chat, text: "...", replyMarkup: keyboard);
                 return;
-            }
+            }                                
         }
     }
 }

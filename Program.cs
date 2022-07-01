@@ -15,13 +15,14 @@ using BotTransfer.Connection;
 using System.Net;
 using System.Diagnostics;
 using NLog;
-
+using Sentry;
+using SharpRaven;
 namespace TestBot
 {
     internal class Program
     {
         static void Main(string[] args)
-        {
+        {            
             try
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -29,11 +30,12 @@ namespace TestBot
                 Console.WriteLine(ServicePointManager.SecurityProtocol.ToString());
                 bot.Start();
             }
+
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 throw new Exception(ex.ToString());
-            }
+            }            
         }
     }
 }
